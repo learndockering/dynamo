@@ -13,17 +13,17 @@
  */
 package com.ocs.dynamo.ui.converter;
 
+import com.ocs.dynamo.domain.model.AttributeModel;
+import com.ocs.dynamo.utils.SystemPropertyUtils;
+import com.vaadin.data.Converter;
+import com.vaadin.data.converter.StringToIntegerConverter;
+import com.vaadin.data.converter.StringToLongConverter;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
-
-import com.ocs.dynamo.domain.model.AttributeModel;
-import com.ocs.dynamo.utils.SystemPropertyUtils;
-import com.vaadin.data.util.converter.Converter;
-import com.vaadin.data.util.converter.StringToIntegerConverter;
-import com.vaadin.data.util.converter.StringToLongConverter;
 
 public final class ConverterFactory {
 
@@ -68,7 +68,7 @@ public final class ConverterFactory {
      */
     @SuppressWarnings("unchecked")
     public static <T> Converter<String, T> createConverterFor(Class<T> clazz, AttributeModel attributeModel,
-            boolean grouping) {
+                                                              boolean grouping) {
         if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
             return (Converter<String, T>) createIntegerConverter(grouping);
         } else if (clazz.equals(Long.class) || clazz.equals(long.class)) {

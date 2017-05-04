@@ -782,6 +782,7 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
      */
     protected void setConverters(AbstractTextField textField, AttributeModel attributeModel) {
         if (attributeModel.getType().equals(BigDecimal.class)) {
+            textField.
             textField.setConverter(ConverterFactory.createBigDecimalConverter(attributeModel.isCurrency(),
                     attributeModel.isPercentage(), SystemPropertyUtils.useThousandsGroupingInEditMode(),
                     attributeModel.getPrecision(), VaadinUtils.getCurrencySymbol()));

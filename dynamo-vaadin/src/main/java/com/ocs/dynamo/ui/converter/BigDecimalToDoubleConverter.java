@@ -13,10 +13,12 @@
  */
 package com.ocs.dynamo.ui.converter;
 
-import java.math.BigDecimal;
-import java.util.Locale;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
 
-import com.vaadin.data.util.converter.Converter;
+import java.math.BigDecimal;
+
 
 /**
  * Converter for coverting between double and BigDecimal Description of BigDecimalToDoubleConverter.
@@ -29,29 +31,18 @@ public class BigDecimalToDoubleConverter implements Converter<Double, BigDecimal
 	private static final long serialVersionUID = -2473928682501898867L;
 
 	@Override
-	public Class<Double> getPresentationType() {
-		return Double.class;
-	}
-
-	@Override
-	public BigDecimal convertToModel(Double value, Class<? extends BigDecimal> targetType, Locale locale) {
-		if (value == null) {
-			return null;
+	public Result<BigDecimal> convertToModel(Double value, ValueContext valueContext) {
+		if (value == null){
+			return Result.ok(null);
 		}
-		return BigDecimal.valueOf(value);
+		return Result.ok(BigDecimal.valueOf(value));
 	}
 
 	@Override
-	public Double convertToPresentation(BigDecimal value, Class<? extends Double> targetType, Locale locale) {
-		if (value == null) {
+	public Double convertToPresentation(BigDecimal value, ValueContext valueContext) {
+		if (value == null){
 			return null;
 		}
 		return value.doubleValue();
 	}
-
-	@Override
-	public Class<BigDecimal> getModelType() {
-		return BigDecimal.class;
-	}
-
 }

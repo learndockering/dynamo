@@ -13,8 +13,10 @@
  */
 package com.ocs.dynamo.ui.converter;
 
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
+
 import java.math.BigDecimal;
-import java.util.Locale;
 
 /**
  * A BigDecimal converter that adds or removes a percentage sign
@@ -36,16 +38,14 @@ public class PercentageBigDecimalConverter extends BigDecimalConverter {
     }
 
     @Override
-    public String convertToPresentation(BigDecimal value, Class<? extends String> targetType,
-            Locale locale) {
-        String result = super.convertToPresentation(value, targetType, locale);
+    public String convertToPresentation(BigDecimal value,
+                                        ValueContext context) {
+        String result = super.convertToPresentation(value, context);
         return result == null ? null : result + "%";
     }
 
     @Override
-    public BigDecimal convertToModel(String value, Class<? extends BigDecimal> targetType,
-            Locale locale) {
-        value = value == null ? null : value.replaceAll("%", "");
-        return super.convertToModel(value, targetType, locale);
+    public Result<BigDecimal> convertToModel(String value, ValueContext context) {
+        return super.convertToModel(value == null ? null : value.replaceAll("%", ""), context);
     }
 }

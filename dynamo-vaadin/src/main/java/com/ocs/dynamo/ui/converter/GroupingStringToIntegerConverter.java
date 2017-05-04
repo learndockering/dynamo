@@ -13,11 +13,11 @@
  */
 package com.ocs.dynamo.ui.converter;
 
+import com.ocs.dynamo.ui.utils.VaadinUtils;
+import com.vaadin.data.converter.StringToIntegerConverter;
+
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import com.ocs.dynamo.ui.utils.VaadinUtils;
-import com.vaadin.data.util.converter.StringToIntegerConverter;
 
 /**
  * A string to integer converter that allows support the user to specify whether a thousands
@@ -32,6 +32,7 @@ public class GroupingStringToIntegerConverter extends StringToIntegerConverter {
     private boolean useGrouping;
 
     public GroupingStringToIntegerConverter(boolean useGrouping) {
+        super("Cannot convert String to Integer");
         this.useGrouping = useGrouping;
     }
 

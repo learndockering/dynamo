@@ -13,12 +13,13 @@
  */
 package com.ocs.dynamo.ui.converter;
 
+import com.ocs.dynamo.utils.DateUtils;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
+
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.Locale;
-
-import com.ocs.dynamo.utils.DateUtils;
-import com.vaadin.data.util.converter.Converter;
 
 /**
  * Vaadin converter for converting a legacy date to a LocalDate
@@ -31,23 +32,12 @@ public class LocalDateToDateConverter implements Converter<Date, LocalDate> {
 	private static final long serialVersionUID = -830307549693107753L;
 
 	@Override
-	public LocalDate convertToModel(Date value, Class<? extends LocalDate> targetType, Locale locale) {
-		return DateUtils.toLocalDate(value);
+	public Result<LocalDate> convertToModel(Date date, ValueContext valueContext) {
+		return Result.ok(DateUtils.toLocalDate(date));
 	}
 
 	@Override
-	public Date convertToPresentation(LocalDate value, Class<? extends Date> targetType, Locale locale) {
-		return DateUtils.toLegacyDate(value);
+	public Date convertToPresentation(LocalDate localDate, ValueContext valueContext) {
+		return DateUtils.toLegacyDate(localDate);
 	}
-
-	@Override
-	public Class<LocalDate> getModelType() {
-		return LocalDate.class;
-	}
-
-	@Override
-	public Class<Date> getPresentationType() {
-		return Date.class;
-	}
-
 }

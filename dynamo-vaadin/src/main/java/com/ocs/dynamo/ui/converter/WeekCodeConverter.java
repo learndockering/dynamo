@@ -13,13 +13,12 @@
  */
 package com.ocs.dynamo.ui.converter;
 
-import java.util.Date;
-import java.util.Locale;
-
-import org.apache.commons.lang.StringUtils;
-
 import com.ocs.dynamo.utils.DateUtils;
-import com.vaadin.data.util.converter.Converter;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
+
+import java.util.Date;
 
 /**
  * Converter for translating a week code (yyyy-ww) to a Date. We need custom functionality for this
@@ -32,37 +31,13 @@ public class WeekCodeConverter implements Converter<String, Date> {
 
     private static final long serialVersionUID = 8190701526190914057L;
 
-    /**
-     * Conver to model
-     */
     @Override
-    public Date convertToModel(String value, Class<? extends Date> targetType, Locale locale) {
-        if (StringUtils.isEmpty(value)) {
-            return null;
-        }
-        return DateUtils.toStartDateOfWeekLegacy(value);
-    }
-
-    /**
-     * Convert to presentation
-     */
-    @Override
-    public String convertToPresentation(Date value, Class<? extends String> targetType,
-            Locale locale) {
-        if (value == null) {
-            return null;
-        }
-        return DateUtils.toWeekCode(value);
+    public Result<Date> convertToModel(String value, ValueContext valueContext) {
+        return Result.ok(value != null ? DateUtils.toStartDateOfWeekLegacy(value) : null);
     }
 
     @Override
-    public Class<Date> getModelType() {
-        return Date.class;
+    public String convertToPresentation(Date date, ValueContext valueContext) {
+        return date != null ? DateUtils.toWeekCode(date) : null;
     }
-
-    @Override
-    public Class<String> getPresentationType() {
-        return String.class;
-    }
-
 }

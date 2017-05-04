@@ -13,16 +13,13 @@
  */
 package com.ocs.dynamo.ui.converter;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import com.ocs.dynamo.ui.utils.VaadinUtils;
+import com.vaadin.data.converter.StringToBigDecimalConverter;
+import org.apache.commons.lang.StringUtils;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import org.apache.commons.lang.StringUtils;
-
-import com.ocs.dynamo.ui.utils.VaadinUtils;
-import com.vaadin.data.util.converter.StringToBigDecimalConverter;
 
 /**
  * A converter for converting between Strings and BigDecimals
@@ -52,6 +49,7 @@ public class BigDecimalConverter extends StringToBigDecimalConverter {
 	 *            will be applied to the decimalFormat of this converter.
 	 */
 	public BigDecimalConverter(final String pattern) {
+		super("Cannot convert string to BigDecimal");
 		this.pattern = pattern;
 	}
 
@@ -59,18 +57,9 @@ public class BigDecimalConverter extends StringToBigDecimalConverter {
 	 * Constructor - for use with a precision and grouping setting
 	 */
 	public BigDecimalConverter(int precision, boolean useGrouping) {
+		super("Cannot convert string to BigDecimal");
 		this.precision = precision;
 		this.useGrouping = useGrouping;
-	}
-
-	@Override
-	public BigDecimal convertToModel(String value, Class<? extends BigDecimal> targetType, Locale locale) {
-		// the original Vaadin code curiously returns a Double here and casts
-		// that to a BigDecimal.
-		// That is not correct, so we use this additional step here
-		Number number = convertToNumber(value, BigDecimal.class, locale);
-		return number == null ? null : BigDecimal.valueOf(number.doubleValue()).setScale(precision,
-		        RoundingMode.HALF_UP);
 	}
 
 	@Override

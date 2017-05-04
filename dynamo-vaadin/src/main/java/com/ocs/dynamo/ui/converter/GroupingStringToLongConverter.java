@@ -13,11 +13,11 @@
  */
 package com.ocs.dynamo.ui.converter;
 
+import com.ocs.dynamo.ui.utils.VaadinUtils;
+import com.vaadin.data.converter.StringToLongConverter;
+
 import java.text.NumberFormat;
 import java.util.Locale;
-
-import com.ocs.dynamo.ui.utils.VaadinUtils;
-import com.vaadin.data.util.converter.StringToLongConverter;
 
 /**
  * A converter from String to Long that allows the user to specify whether a grouping separator must
@@ -32,6 +32,7 @@ public class GroupingStringToLongConverter extends StringToLongConverter {
     private boolean useGrouping;
 
     public GroupingStringToLongConverter(boolean useGrouping) {
+        super("Cannot convert String to Long");
         this.useGrouping = useGrouping;
     }
 

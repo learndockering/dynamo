@@ -13,38 +13,22 @@
  */
 package com.ocs.dynamo.ui.converter;
 
-import java.util.Locale;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
 
-import com.vaadin.data.util.converter.Converter;
 
 public class LongToDoubleConverter implements Converter<Double, Long> {
 
 	private static final long serialVersionUID = 8666806617896024450L;
 
 	@Override
-	public Long convertToModel(Double value, Class<? extends Long> targetType, Locale locale) {
-		if (value == null) {
-			return null;
-		}
-		return value.longValue();
+	public Result<Long> convertToModel(Double value, ValueContext valueContext) {
+		return Result.ok(value != null ? value.longValue() : null);
 	}
 
 	@Override
-	public Double convertToPresentation(Long value, Class<? extends Double> targetType, Locale locale) {
-		if (value == null) {
-			return null;
-		}
-		return value.doubleValue();
+	public Double convertToPresentation(Long value, ValueContext valueContext) {
+		return value != null ? value.doubleValue() : null;
 	}
-
-	@Override
-	public Class<Long> getModelType() {
-		return Long.class;
-	}
-
-	@Override
-	public Class<Double> getPresentationType() {
-		return Double.class;
-	}
-
 }

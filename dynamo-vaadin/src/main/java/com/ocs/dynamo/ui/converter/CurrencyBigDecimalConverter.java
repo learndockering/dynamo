@@ -13,12 +13,14 @@
  */
 package com.ocs.dynamo.ui.converter;
 
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * A converter for a BigDecimal field that includes a currency symbol.
@@ -32,9 +34,9 @@ public class CurrencyBigDecimalConverter extends BigDecimalConverter {
     private String currencySymbol;
 
     /**
-     * 
+     *
      * Constructor for CurrencyBigDecimalConverter.
-     * 
+     *
      * @param precision
      * @param useGrouping
      * @param currencySymbol
@@ -45,19 +47,17 @@ public class CurrencyBigDecimalConverter extends BigDecimalConverter {
     }
 
     @Override
-    public BigDecimal convertToModel(String value, Class<? extends BigDecimal> targetType,
-            Locale locale) {
-        if (value == null) {
-            return null;
+    public Result<BigDecimal> convertToModel(String value, ValueContext context) {
+        if (value == null){
+            Result.ok(null);
         }
-
+        String newValue = value.trim();
         if (!StringUtils.isEmpty(value) && !value.startsWith(currencySymbol)) {
-            String oldValue = value.trim();
-            value = currencySymbol;
-            value += this.getDecimalFormat(locale).getPositivePrefix().length() > 1 ? " " : "";
-            value += oldValue;
+            newValue = currencySymbol;
+            newValue += this.getDecimalFormat(context.getLocale().orElse(null)).getPositivePrefix().length() > 1 ? " " : "";
+            newValue += value;
         }
-        return super.convertToModel(value, targetType, locale);
+        return super.convertToModel(newValue, context);
     }
 
     @Override

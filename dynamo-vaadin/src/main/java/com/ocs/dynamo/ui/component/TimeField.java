@@ -13,7 +13,6 @@
  */
 package com.ocs.dynamo.ui.component;
 
-import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomField;
 import com.vaadin.ui.HorizontalLayout;
@@ -409,11 +408,21 @@ public class TimeField extends CustomField<Date> {
 	}
 
 	@Override
+	public Date getValue() {
+		return null;
+	}
+
+	@Override
 	public void setReadOnly(boolean readOnly) {
 		hourSelect.setReadOnly(readOnly);
 		minuteSelect.setReadOnly(readOnly);
 		secondSelect.setReadOnly(readOnly);
 		super.setReadOnly(readOnly);
+	}
+
+	@Override
+	protected void doSetValue(Date date) {
+
 	}
 
 	public int getMinuteInterval() {

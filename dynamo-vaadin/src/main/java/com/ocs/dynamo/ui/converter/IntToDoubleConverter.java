@@ -13,38 +13,22 @@
  */
 package com.ocs.dynamo.ui.converter;
 
-import java.util.Locale;
+import com.vaadin.data.Converter;
+import com.vaadin.data.Result;
+import com.vaadin.data.ValueContext;
 
-import com.vaadin.data.util.converter.Converter;
 
 public class IntToDoubleConverter implements Converter<Double, Integer> {
 
 	private static final long serialVersionUID = -7643776654167662622L;
 
 	@Override
-	public Integer convertToModel(Double value, Class<? extends Integer> targetType, Locale locale) {
-		if (value == null) {
-			return null;
-		}
-		return value.intValue();
+	public Result<Integer> convertToModel(Double value, ValueContext valueContext) {
+		return Result.ok(value == null ? null : value.intValue());
 	}
 
 	@Override
-	public Double convertToPresentation(Integer value, Class<? extends Double> targetType, Locale locale) {
-		if (value == null) {
-			return null;
-		}
-		return value.doubleValue();
+	public Double convertToPresentation(Integer value, ValueContext valueContext) {
+		return value == null ? null : value.doubleValue();
 	}
-
-	@Override
-	public Class<Integer> getModelType() {
-		return Integer.class;
-	}
-
-	@Override
-	public Class<Double> getPresentationType() {
-		return Double.class;
-	}
-
 }
