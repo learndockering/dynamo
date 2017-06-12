@@ -94,7 +94,8 @@
 		<module>dynamo-archetype</module>
 		<module>dynamo-archetype-modules</module>
 		<module>dynamo-showcase</module>
-	</modules>
+        <module>dynamo-odata</module>
+    </modules>
 
 	<properties>
 		<!-- Build settings. -->
@@ -148,6 +149,7 @@
 		<!-- Make sure you are using the latest version here. -->
 		<org.sonatype.plugins.version>1.6.7</org.sonatype.plugins.version>
 		<vaadin.extended-token-field.version>0.2.0</vaadin.extended-token-field.version>
+		<olingo.version>4.3.0</olingo.version>
 	</properties>
 
 	<dependencyManagement>
@@ -333,6 +335,29 @@
 				<artifactId>querydsl-apt</artifactId>
 				<version>${querydsl.version}</version>
 			</dependency>
+
+			<!-- Apache Olingo -->
+			<dependency>
+				<groupId>org.apache.olingo</groupId>
+				<artifactId>odata-server-api</artifactId>
+				<version>${olingo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.olingo</groupId>
+				<artifactId>odata-server-core</artifactId>
+				<version>${olingo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.olingo</groupId>
+				<artifactId>odata-commons-api</artifactId>
+				<version>${olingo.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.olingo</groupId>
+				<artifactId>odata-commons-core</artifactId>
+				<version>${olingo.version}</version>
+			</dependency>
+
 			<!-- Excel -->
 			<dependency>
 				<groupId>org.apache.poi</groupId>
