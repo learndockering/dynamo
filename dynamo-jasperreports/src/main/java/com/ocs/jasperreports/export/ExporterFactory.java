@@ -34,9 +34,17 @@ import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 
 import java.io.OutputStream;
 
-public class ExporterFactory {
+/**
+ * 
+ * @author bas.rutten
+ *
+ */
+public final class ExporterFactory {
 
-    @SuppressWarnings("unchecked")
+    private ExporterFactory() {
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static Exporter getExporter(ReportGenerator.Format format, JasperPrint jasperPrint,
             OutputStream outputStream) {
         final Exporter exporter;

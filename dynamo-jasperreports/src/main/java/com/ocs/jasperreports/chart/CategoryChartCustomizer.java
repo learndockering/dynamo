@@ -101,5 +101,4 @@ public class CategoryChartCustomizer extends AbstractChartCustomizer implements 
     public void addAnnotationToPlot(CategoryPlot plot, Annotation annotation) {
         // TODO not implemented yet
     }
-
 }

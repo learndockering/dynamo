@@ -163,14 +163,13 @@ public class ReportGenerator {
         // Fill report
         final JasperPrint jasperPrint = fillReport(jasperReport, copyParameters, jrDataSource);
         // Export report
-        switch (format) {
-        case HTML:
+
+        if (Format.HTML.equals(format)) {
             return exportReportToHTML(jasperPrint, session, showMargins);
-        default:
-            // Other formats
+        } else {
             exportReport(jasperPrint, format, outputStream);
-            break;
         }
+
         return null;
     }
 
@@ -225,7 +224,7 @@ public class ReportGenerator {
      * @param outputStream
      *            The output stream to which the report is written
      */
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes" })
     private void exportReport(JasperPrint jasperPrint, Format format, OutputStream outputStream) {
         try {
             Exporter exporter = ExporterFactory.getExporter(format, jasperPrint, outputStream);

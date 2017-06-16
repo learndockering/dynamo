@@ -13,17 +13,6 @@
  */
 package com.ocs.jasperreports.renderer;
 
-import java.awt.Dimension;
-import java.awt.Rectangle;
-import java.awt.geom.Dimension2D;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-import org.w3c.tools.codec.Base64Encoder;
-
 import net.sf.jasperreports.engine.JRAnchor;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRPrintElement;
@@ -48,6 +37,16 @@ import net.sf.jasperreports.renderers.ResourceRenderer;
 import net.sf.jasperreports.renderers.util.RendererUtil;
 import net.sf.jasperreports.renderers.util.SvgDataSniffer;
 import net.sf.jasperreports.renderers.util.SvgFontProcessor;
+import org.w3c.tools.codec.Base64Encoder;
+
+import java.awt.Dimension;
+import java.awt.Rectangle;
+import java.awt.geom.Dimension2D;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * This class is used to override the part where the HtmlExporter fails to use the fonts inside the
@@ -56,6 +55,7 @@ import net.sf.jasperreports.renderers.util.SvgFontProcessor;
  */
 public class HtmlSvgImageFontExporter extends HtmlExporter {
 
+    @Override
     protected void writeImage(JRPrintImage image, TableCell cell) throws IOException, JRException {
         startCell(image, cell);
 
@@ -167,9 +167,8 @@ public class HtmlSvgImageFontExporter extends HtmlExporter {
 
                 if (imageMapName == null) {
                     Renderable originalRenderer = image.getRenderer();
-                    imageMapName = "map_" + getElementIndex(cell).toString() + "-" + originalRenderer.getId();// use
-                                                                                                              // renderer.getId()?
-                    imageMapAreas = ((AreaHyperlinksRenderable) originalRenderer).getImageAreaHyperlinks(renderingArea);// FIXMECHART
+                    imageMapName = "map_" + getElementIndex(cell).toString() + "-" + originalRenderer.getId();
+                    imageMapAreas = ((AreaHyperlinksRenderable) originalRenderer).getImageAreaHyperlinks(renderingArea);
 
                     if (renderer instanceof DataRenderable) {
                         imageMaps.put(new Pair<String, Rectangle>(renderer.getId(), renderingArea), imageMapName);
@@ -440,15 +439,31 @@ public class HtmlSvgImageFontExporter extends HtmlExporter {
     }
 
     private static class InternalImageProcessorResult {
-        protected final String imageSource;
-        protected final Dimension2D dimension;
-        protected final boolean isEmbededSvgData;
+
+        private final String imageSource;
+
+        private final Dimension2D dimension;
+
+        private final boolean isEmbededSvgData;
 
         protected InternalImageProcessorResult(String imagePath, Dimension2D dimension, boolean isEmbededSvgData) {
             this.imageSource = imagePath;
             this.dimension = dimension;
             this.isEmbededSvgData = isEmbededSvgData;
         }
+
+        public String getImageSource() {
+            return imageSource;
+        }
+
+        public Dimension2D getDimension() {
+            return dimension;
+        }
+
+        public boolean isEmbededSvgData() {
+            return isEmbededSvgData;
+        }
+
     }
 
     private class InternalImageProcessor {

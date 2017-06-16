@@ -13,15 +13,19 @@
  */
 package com.ocs.jasperreports.chart;
 
-import java.awt.Color;
-import java.awt.Paint;
-import java.awt.Stroke;
-import java.awt.geom.Rectangle2D;
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
+import com.ocs.jasperreports.renderer.SvgFontRenderer;
+import net.sf.jasperreports.charts.util.ChartHyperlinkProvider;
+import net.sf.jasperreports.charts.util.SvgChartRendererFactory;
+import net.sf.jasperreports.engine.JRAbstractChartCustomizer;
+import net.sf.jasperreports.engine.JRChart;
+import net.sf.jasperreports.engine.JRChartCustomizer;
+import net.sf.jasperreports.engine.JRPrintHyperlink;
+import net.sf.jasperreports.engine.JRRuntimeException;
+import net.sf.jasperreports.engine.JasperReportsContext;
+import net.sf.jasperreports.engine.base.JRBasePrintHyperlink;
+import net.sf.jasperreports.engine.type.HyperlinkTypeEnum;
+import net.sf.jasperreports.renderers.Renderable;
+import net.sf.jasperreports.renderers.SimpleRenderToImageAwareDataRenderer;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.annotations.Annotation;
 import org.jfree.chart.entity.ChartEntity;
@@ -39,20 +43,14 @@ import org.jfree.ui.VerticalAlignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ocs.jasperreports.renderer.SvgFontRenderer;
-
-import net.sf.jasperreports.charts.util.ChartHyperlinkProvider;
-import net.sf.jasperreports.charts.util.SvgChartRendererFactory;
-import net.sf.jasperreports.engine.JRAbstractChartCustomizer;
-import net.sf.jasperreports.engine.JRChart;
-import net.sf.jasperreports.engine.JRChartCustomizer;
-import net.sf.jasperreports.engine.JRPrintHyperlink;
-import net.sf.jasperreports.engine.JRRuntimeException;
-import net.sf.jasperreports.engine.JasperReportsContext;
-import net.sf.jasperreports.engine.base.JRBasePrintHyperlink;
-import net.sf.jasperreports.engine.type.HyperlinkTypeEnum;
-import net.sf.jasperreports.renderers.Renderable;
-import net.sf.jasperreports.renderers.SimpleRenderToImageAwareDataRenderer;
+import java.awt.Color;
+import java.awt.Paint;
+import java.awt.Stroke;
+import java.awt.geom.Rectangle2D;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Chart customizer that adds several enhancements to charts: draw labels, quadrants and markers.
@@ -156,7 +154,7 @@ public class ChartCustomizer<T extends Plot> extends JRAbstractChartCustomizer {
 
 	}
 
-	public static enum Action {
+	public enum Action {
 		ZOOM
 	}
 
