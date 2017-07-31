@@ -1421,6 +1421,21 @@ public class ModelBasedEditForm<ID extends Serializable, T extends AbstractEntit
             field.setVisible(visible);
         }
     }
+    
+    @SuppressWarnings("unchecked")
+    private void setDefaultValues() {
+        // set default values
+        if (entity.getId() == null) {
+            for (AttributeModel am : getEntityModel().getAttributeModels()) {
+                if (am.getDefaultValue() != null) {
+                    Field<?> field = groups.get(isViewMode()).getField(am.getPath());
+                    if (field != null) {
+                        field.getPropertyDataSource().setValue(am.getDefaultValue());
+                    }
+                }
+            }
+        }
+    }
 
     public void setDetailJoins(FetchJoinInformation[] detailJoins) {
         this.detailJoins = detailJoins;
@@ -1439,6 +1454,8 @@ public class ModelBasedEditForm<ID extends Serializable, T extends AbstractEntit
         // recreate the group
         BeanItem<T> beanItem = new BeanItem<>(entity);
         groups.get(isViewMode()).setItemDataSource(beanItem);
+        
+        setDefaultValues();
 
         // "rebuild" so that the correct layout is displayed
         build();
