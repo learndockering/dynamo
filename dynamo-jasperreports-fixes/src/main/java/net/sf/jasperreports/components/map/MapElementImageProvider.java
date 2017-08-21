@@ -43,12 +43,12 @@ import net.sf.jasperreports.renderers.Renderable;
 import net.sf.jasperreports.renderers.util.RendererUtil;
 
 /**
- * Copy from original class by Jasperreports, which doesn't support automatic centering and zooming to ensure the
- * visibility of all defined makers. Now when one defines a zoom level < 0 then the center coordinate and zoom level
- * will not be used and google will automatically size and center to show all markers.
+ * Copy from original class by Jasperreports, which doesn't support automatic centering and zooming
+ * to ensure the visibility of all defined makers. Now when one defines a zoom level < 0 then the
+ * center coordinate and zoom level will not be used and google will automatically size and center
+ * to show all markers.
  * 
- * Other enhancements include: 
- * - Grouping of the marker style to fit more markers in the static map.
+ * Other enhancements include: - Grouping of the marker style to fit more markers in the static map.
  * - Corrected the Google static map URL.
  * 
  * @author sanda zaharia (shertage@users.sourceforge.net)
