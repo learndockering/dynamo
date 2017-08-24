@@ -185,7 +185,6 @@ public abstract class BaseExportTemplate<ID extends Serializable, T extends Abst
      */
     protected Workbook createWorkbook(int size) {
         if (size > getMaxRows()) {
-            System.out.println("Generating Streaming Export");
             return new SXSSFWorkbook();
         }
         return new XSSFWorkbook();
