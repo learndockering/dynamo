@@ -747,10 +747,12 @@
 					</plugin>
 					-->
 					<!-- Publish to GitHub Releases. -->
+					<!--
 					<plugin>
 						<groupId>de.jutzig</groupId>
 						<artifactId>github-release-plugin</artifactId>
 					</plugin>
+					-->
 				</plugins>
 			</build>
 		</profile>
