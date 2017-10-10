@@ -716,8 +716,6 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!-- Sign artefacts. -->
-					<!--
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
@@ -729,9 +727,12 @@
 								<goals>
 									<goal>sign</goal>
 								</goals>
+								<configuration>
+									<keyname>info@dynamoframework.org</keyname>
+								</configuration>
 							</execution>
 						</executions>
-					</plugin> -->
+					</plugin>
 					<!-- Publish to central repositories. -->
 					<!--
 					<plugin>
