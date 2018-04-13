@@ -780,7 +780,6 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 	public final void edit(T entity, int initialTab) {
 		setSelectedItem(entity);
 		doEdit();
-
 		if (editForm != null) {
 			editForm.selectTab(initialTab);
 		} else {
