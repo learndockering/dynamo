@@ -235,7 +235,6 @@ public class ModelBasedTable<ID extends Serializable, T extends AbstractEntity<I
 				public Object generateCell(Table source, final Object itemId, Object columnId) {
 					Object val = getItem(itemId).getItemProperty(columnId).getValue();
 					if (val != null) {
-
 						String str = FormatUtils.formatEntity(attributeModel.getNestedEntityModel(), val);
 						Button button = new Button(str);
 						button.setStyleName(ValoTheme.BUTTON_LINK);

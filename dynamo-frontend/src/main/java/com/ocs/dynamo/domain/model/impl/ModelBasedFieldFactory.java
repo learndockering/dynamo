@@ -52,6 +52,7 @@ import com.ocs.dynamo.service.ServiceLocatorFactory;
 import com.ocs.dynamo.ui.component.EntityComboBox.SelectMode;
 import com.ocs.dynamo.ui.component.EntityLookupField;
 import com.ocs.dynamo.ui.component.FancyListSelect;
+import com.ocs.dynamo.ui.component.InternalLinkField;
 import com.ocs.dynamo.ui.component.QuickAddEntityComboBox;
 import com.ocs.dynamo.ui.component.QuickAddListSelect;
 import com.ocs.dynamo.ui.component.SimpleTokenFieldSelect;
@@ -223,6 +224,22 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
 		SortOrder[] sos = constructSortOrder(entityModel);
 		return new QuickAddEntityComboBox<>((EntityModel<S>) entityModel, attributeModel, service, SelectMode.FILTERED,
 				filter, search, null, sos);
+	}
+
+	/**
+	 * Constructs an internal link field
+	 * 
+	 * @param entityModel
+	 * @param attributeModel
+	 * @param filter
+	 * @param search
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public <ID extends Serializable, S extends AbstractEntity<ID>> AbstractField<?> constructInternalLinkField(
+			EntityModel<?> entityModel, AttributeModel attributeModel) {
+		entityModel = resolveEntityModel(entityModel, attributeModel);
+		return new InternalLinkField<>((EntityModel<S>) entityModel, attributeModel);
 	}
 
 	/**
@@ -514,8 +531,8 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
 		// in case of a read-only field, return <code>null</code> so Vaadin will
 		// render a label instead
 		AttributeModel attributeModel = model.getAttributeModel(propertyId);
-		if (EditableType.READ_ONLY.equals(attributeModel.getEditableType())
-				&& (!attributeModel.isUrl() && !AttributeType.DETAIL.equals(attributeModel.getAttributeType()))
+		if (EditableType.READ_ONLY.equals(attributeModel.getEditableType()) && (!attributeModel.isUrl()
+				&& !attributeModel.isNavigable() && !AttributeType.DETAIL.equals(attributeModel.getAttributeType()))
 				&& !search) {
 			return null;
 		}
@@ -546,6 +563,8 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
 				slider.setMax(attributeModel.getMaxValue());
 			}
 			field = slider;
+		} else if (attributeModel.isNavigable()) {
+			field = constructInternalLinkField(fieldEntityModel, attributeModel);
 		} else if (attributeModel.isWeek()) {
 			// special case - week field in a table
 			TextField tf = new TextField();
