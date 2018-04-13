@@ -1,8 +1,9 @@
-/.checkstyle
-/.classpath
-/.DS_Store
-/.project
-/.settings
-/target/
+.checkstyle
+.classpath
+.DS_Store
+.project
+.settings
+target/
 *.iml
-/.idea
+.idea
+.*.swp
