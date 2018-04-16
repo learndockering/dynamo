@@ -44,18 +44,21 @@ import com.ocs.dynamo.domain.model.EntityModel;
 import com.ocs.dynamo.domain.model.impl.ModelBasedFieldFactory;
 import com.ocs.dynamo.exception.OCSRuntimeException;
 import com.ocs.dynamo.service.BaseService;
+import com.ocs.dynamo.ui.BaseUI;
 import com.ocs.dynamo.ui.Refreshable;
 import com.ocs.dynamo.ui.component.Cascadable;
 import com.ocs.dynamo.ui.component.CollapsiblePanel;
 import com.ocs.dynamo.ui.component.DefaultEmbedded;
 import com.ocs.dynamo.ui.component.DefaultHorizontalLayout;
 import com.ocs.dynamo.ui.component.DefaultVerticalLayout;
+import com.ocs.dynamo.ui.component.InternalLinkField;
 import com.ocs.dynamo.ui.component.QuickAddListSelect;
 import com.ocs.dynamo.ui.component.URLField;
 import com.ocs.dynamo.ui.composite.layout.FormOptions;
 import com.ocs.dynamo.ui.composite.type.AttributeGroupMode;
 import com.ocs.dynamo.ui.composite.type.ScreenMode;
 import com.ocs.dynamo.ui.utils.EntityModelUtil;
+import com.ocs.dynamo.ui.utils.FormatUtils;
 import com.ocs.dynamo.ui.utils.VaadinUtils;
 import com.ocs.dynamo.util.SystemPropertyUtils;
 import com.ocs.dynamo.util.ValidationMode;
@@ -83,11 +86,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.Upload;
 import com.vaadin.ui.Upload.Receiver;
 import com.vaadin.ui.Upload.SucceededEvent;
 import com.vaadin.ui.Upload.SucceededListener;
+import com.vaadin.ui.themes.ValoTheme;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -421,6 +426,8 @@ public class ModelBasedEditForm<ID extends Serializable, T extends AbstractEntit
 				if (attributeModel.isUrl()) {
 					// display a complex component even in read-only mode
 					constructField(parent, entityModel, attributeModel, true, tabIndex, sameRow);
+				} else if (attributeModel.isNavigable() && isViewMode()) {
+					constructField(parent, entityModel, attributeModel, true, tabIndex, sameRow);
 				} else if (AttributeType.LOB.equals(type) && attributeModel.isImage()) {
 					// image preview
 					Component c = constructImagePreview(attributeModel);
@@ -505,9 +512,13 @@ public class ModelBasedEditForm<ID extends Serializable, T extends AbstractEntit
 	}
 
 	/**
+	 * Callback method that is called after either the layout for the view mode or
+	 * the layout for the edit mode has just been built for the first time
 	 * 
 	 * @param layout
+	 *            the layout the layout
 	 * @param viewMode
+	 *            whether the layout pertains to the view mode
 	 */
 	protected void afterLayoutBuilt(Layout layout, boolean viewMode) {
 		// after the layout
