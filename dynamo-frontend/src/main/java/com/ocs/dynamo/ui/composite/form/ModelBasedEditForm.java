@@ -512,9 +512,13 @@ public class ModelBasedEditForm<ID extends Serializable, T extends AbstractEntit
 	}
 
 	/**
+	 * Callback method that is called after either the layout for the view mode or
+	 * the layout for the edit mode has just been built for the first time
 	 * 
 	 * @param layout
+	 *            the layout the layout
 	 * @param viewMode
+	 *            whether the layout pertains to the view mode
 	 */
 	protected void afterLayoutBuilt(Layout layout, boolean viewMode) {
 		// after the layout

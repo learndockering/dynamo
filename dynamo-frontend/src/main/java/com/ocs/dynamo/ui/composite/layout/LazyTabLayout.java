@@ -32,7 +32,9 @@ import com.vaadin.ui.TabSheet.Tab;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * A layout that contains a tab sheet with tabs that are lazily loaded
+ * A layout that contains a tab sheet with tabs that are lazily loaded. Use the getTabCaptions method
+ * to specify the captions of the tabs, and (implicitly) the number of tabs. Whenever the user selects
+ * a tab for the first time, the initTab method is called in order to lazily construct the tab.
  * 
  * @author bas.rutten
  * @param <ID>
@@ -225,7 +227,7 @@ public abstract class LazyTabLayout<ID extends Serializable, T extends AbstractE
 	 * Lazily creates a certain tab
 	 * 
 	 * @param index
-	 *            the index of the tab to create
+	 *            the zero-based index of the tab to create
 	 * @return
 	 */
 	protected abstract Component initTab(int index);

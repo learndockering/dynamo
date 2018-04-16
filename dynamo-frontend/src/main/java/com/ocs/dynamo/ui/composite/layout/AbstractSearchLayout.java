@@ -71,6 +71,10 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 	 */
 	private Button addButton;
 
+	/**
+	 * The back button that is displayed above the tab sheet in "complex details"
+	 * mode
+	 */
 	private Button complexDetailModeBackButton;
 
 	/**
@@ -350,13 +354,13 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 			}
 
 			@Override
-			protected String[] getTabCaptions() {
-				return AbstractSearchLayout.this.getDetailModeTabCaptions();
+			protected Resource getIconForTab(int index) {
+				return AbstractSearchLayout.this.getIconForTab(index);
 			}
 
 			@Override
-			protected Resource getIconForTab(int index) {
-				return AbstractSearchLayout.this.getIconForTab(index);
+			protected String[] getTabCaptions() {
+				return AbstractSearchLayout.this.getDetailModeTabCaptions();
 			}
 
 			@Override
@@ -638,21 +642,6 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 	}
 
 	/**
-	 * Opens the screen in details mode and selects a certain tab
-	 * 
-	 * @param entity
-	 * @param selectedTab
-	 */
-	protected void detailsMode(T entity, int selectedTab) {
-		detailsMode(entity);
-		if (editForm != null) {
-			editForm.selectTab(selectedTab);
-		} else if (getFormOptions().isComplexDetailsMode()) {
-			tabLayout.selectTab(selectedTab);
-		}
-	}
-
-	/**
 	 * Open the screen in details mode
 	 * 
 	 * @param entity
@@ -745,6 +734,21 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 	}
 
 	/**
+	 * Opens the screen in details mode and selects a certain tab
+	 * 
+	 * @param entity
+	 * @param selectedTab
+	 */
+	protected void detailsMode(T entity, int selectedTab) {
+		detailsMode(entity);
+		if (editForm != null) {
+			editForm.selectTab(selectedTab);
+		} else if (getFormOptions().isComplexDetailsMode()) {
+			tabLayout.selectTab(selectedTab);
+		}
+	}
+
+	/**
 	 * Callback method that is called when the user presses the edit method. Will by
 	 * default open the screen in edit mode. Overwrite in subclass if needed
 	 */
@@ -791,15 +795,31 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 		return addButton;
 	}
 
+	public Button getComplexDetailModeBackButton() {
+		return complexDetailModeBackButton;
+	}
+
 	protected List<Filter> getDefaultFilters() {
 		return defaultFilters;
 	}
 
+	/**
+	 * Returns the captions for the tab pages to display within the tab sheet, for a
+	 * search layout for which the complexDetailsEditMode has been set to true
+	 * 
+	 * @return
+	 */
 	protected String[] getDetailModeTabCaptions() {
 		// overwrite in subclasses
 		return new String[0];
 	}
 
+	/**
+	 * Returns the caption to display above the tab sheet, for a search layout for
+	 * which the complexDetailsEditMode has been set to true
+	 * 
+	 * @return
+	 */
 	protected String getDetailModeTabTitle() {
 		//
 		return null;
@@ -821,13 +841,13 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 		return getSearchForm().getFilterCount();
 	}
 
-	public VerticalLayout getMainSearchLayout() {
-		return mainSearchLayout;
-	}
-
 	protected Resource getIconForTab(int index) {
 		// overwrite
 		return null;
+	}
+
+	public VerticalLayout getMainSearchLayout() {
+		return mainSearchLayout;
 	}
 
 	/**
@@ -932,6 +952,19 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 		return false;
 	}
 
+	/**
+	 * Constructs a tab sheet for the tab component
+	 * 
+	 * @param entity
+	 *            the selected entity
+	 * @param index
+	 *            the index of the selected tab sheet
+	 * @param fo
+	 *            form options that specify how to constructe the component
+	 * @param newEntity
+	 *            whether we are in the process of creating a new entity
+	 * @return
+	 */
 	protected Component initTab(T entity, int index, FormOptions fo, boolean newEntity) {
 		// overwrite is subclasses
 		return null;
@@ -1124,10 +1157,6 @@ public abstract class AbstractSearchLayout<ID extends Serializable, T extends Ab
 	 */
 	public void validateBeforeSearch() {
 		// overwrite in subclasses
-	}
-
-	public Button getComplexDetailModeBackButton() {
-		return complexDetailModeBackButton;
 	}
 
 }

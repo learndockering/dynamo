@@ -101,6 +101,12 @@ public abstract class BaseUI extends UI {
 		this.navigator = navigator;
 	}
 
+	/**
+	 * Adds a mapping for carrying out navigation within the application
+	 * 
+	 * @param entityClass
+	 * @param navigateAction
+	 */
 	public void addEntityOnViewMapping(Class<?> entityClass, Consumer<?> navigateAction) {
 		entityOnViewMapping.put(entityClass, navigateAction);
 	}
