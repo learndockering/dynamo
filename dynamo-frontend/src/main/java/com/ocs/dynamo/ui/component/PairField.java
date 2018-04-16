@@ -60,14 +60,19 @@ public class PairField<L, R> extends CustomField<Pair<L, R>> {
 		return root;
 	}
 
-	public void setValue(Pair<L, R> newFieldValue) {
+	@Override
+	protected void setInternalValue(Pair<L, R> newFieldValue) {
 		if (newFieldValue != null) {
 			left.setValue(newFieldValue.getLeft());
 			right.setValue(newFieldValue.getRight());
+		} else {
+			left.setValue(null);
+			right.setValue(null);
 		}
 	}
 
-	public Pair<L, R> getValue() {
+	@Override
+	protected Pair<L, R> getInternalValue() {
 		return Pair.of(left.getValue(), right.getValue());
 	}
 
@@ -76,5 +81,4 @@ public class PairField<L, R> extends CustomField<Pair<L, R>> {
 	public Class<? extends Pair<L, R>> getType() {
 		return (Class<Pair<L, R>>) (Class<?>) Pair.class;
 	}
-
 }
