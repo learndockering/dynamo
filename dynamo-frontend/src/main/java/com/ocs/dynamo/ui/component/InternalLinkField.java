@@ -88,4 +88,9 @@ public class InternalLinkField<ID extends Serializable, T extends AbstractEntity
 		}
 	}
 
+	@Override
+	public void setEnabled(boolean enabled) {
+		// field is always enabled
+		super.setEnabled(true);
+	}
 }
