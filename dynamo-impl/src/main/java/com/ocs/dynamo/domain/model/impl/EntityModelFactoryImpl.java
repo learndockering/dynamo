@@ -363,6 +363,11 @@ public class EntityModelFactoryImpl implements EntityModelFactory {
 						}
 					}
 				}
+
+				// only master relationships make sense as "navigable"
+				if (m.isNavigable() && !AttributeType.MASTER.equals(m.getAttributeType())) {
+					throw new OCSRuntimeException("Navigable=true is not allowed for attribute " + m.getName());
+				}
 			}
 
 			if (!mainAttributeFound && !nested) {

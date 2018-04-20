@@ -684,13 +684,12 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
 	/**
 	 * Add additional field settings to a field
 	 * 
-	 * @param field
-	 * @param attributeModel
+	 * @param field the field
+	 * @param attributeModel the attribute model
 	 */
 	private void postProcessField(Field<?> field, AttributeModel attributeModel) {
 		if (field instanceof AbstractTextField) {
 			AbstractTextField textField = (AbstractTextField) field;
-			textField.setDescription(attributeModel.getDescription());
 			textField.setNullSettingAllowed(true);
 			textField.setNullRepresentation("");
 			if (!StringUtils.isEmpty(attributeModel.getPrompt())) {
@@ -705,7 +704,6 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
 				field.addValidator(
 						new EmailValidator(messageService.getMessage("ocs.no.valid.email", VaadinUtils.getLocale())));
 			}
-
 		} else if (field instanceof DateField) {
 			// set a separate format for a date field
 			DateField dateField = (DateField) field;
@@ -716,6 +714,11 @@ public class ModelBasedFieldFactory<T> extends DefaultFieldGroupFieldFactory imp
 			if (AttributeDateType.TIMESTAMP.equals(attributeModel.getDateType())) {
 				dateField.setResolution(Resolution.SECOND);
 			}
+		} 
+		
+		// set description for all fields
+		if (field instanceof AbstractField) {
+			((AbstractField<?>) field).setDescription(attributeModel.getDescription());
 		}
 	}
 
