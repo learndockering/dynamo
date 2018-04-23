@@ -306,27 +306,32 @@ public class EntityLookupField<ID extends Serializable, T extends AbstractEntity
 	 * @param newValue
 	 *            the new value
 	 */
-	@SuppressWarnings("unchecked")
 	private void updateLabel(Object newValue) {
 		if (label != null) {
 			label.setCaptionAsHtml(true);
 
-			String caption = getMessageService().getMessage("ocs.no.item.selected", VaadinUtils.getLocale());
-			if (newValue instanceof Collection<?>) {
-				Collection<T> col = (Collection<T>) newValue;
-				if (!col.isEmpty()) {
-					caption = EntityModelUtil.getDisplayPropertyValue(col, getEntityModel(),
-							SystemPropertyUtils.getLookupFieldMaxItems(), getMessageService());
-				}
-			} else {
-				// just a single value
-				T t = (T) newValue;
-				if (newValue != null) {
-					caption = EntityModelUtil.getDisplayPropertyValue(t, getEntityModel());
-				}
-			}
+			String caption = getLabel(newValue);
 			label.setCaption(caption.replaceAll(",", StringUtils.HTML_LINE_BREAK));
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	protected String getLabel(Object newValue) {
+		String caption = getMessageService().getMessage("ocs.no.item.selected", VaadinUtils.getLocale());
+		if (newValue instanceof Collection<?>) {
+			Collection<T> col = (Collection<T>) newValue;
+			if (!col.isEmpty()) {
+				caption = EntityModelUtil.getDisplayPropertyValue(col, getEntityModel(),
+						SystemPropertyUtils.getLookupFieldMaxItems(), getMessageService());
+			}
+		} else {
+			// just a single value
+			T t = (T) newValue;
+			if (newValue != null) {
+				caption = EntityModelUtil.getDisplayPropertyValue(t, getEntityModel());
+			}
+		}
+		return caption;
 	}
 
 	@Override
