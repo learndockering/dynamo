@@ -60,6 +60,11 @@ public class EntityLookupField<ID extends Serializable, T extends AbstractEntity
 	private boolean directNavigationAllowed;
 
 	/**
+	 * Indicates whether it is allowed to clear the selection
+	 */
+	private boolean clearAllowed;
+	
+	/**
 	 * Indicates whether it is allowed to add items
 	 */
 	private boolean addAllowed;
@@ -124,6 +129,7 @@ public class EntityLookupField<ID extends Serializable, T extends AbstractEntity
 		this.sortOrders = sortOrders != null ? sortOrders : new ArrayList<>();
 		this.joins = joins;
 		this.multiSelect = multiSelect;
+		this.clearAllowed = true;
 		this.addAllowed = !search && (attributeModel != null && attributeModel.isQuickAddAllowed());
 		this.directNavigationAllowed = !search && (attributeModel != null && attributeModel.isDirectNavigation());
 	}
@@ -175,6 +181,30 @@ public class EntityLookupField<ID extends Serializable, T extends AbstractEntity
 	@Override
 	public Class<?> getType() {
 		return Object.class;
+	}
+
+	protected boolean isDirectNavigationAllowed() {
+		return directNavigationAllowed;
+	}
+
+	protected void setDirectNavigationAllowed(boolean directNavigationAllowed) {
+		this.directNavigationAllowed = directNavigationAllowed;
+	}
+
+	protected boolean isClearAllowed() {
+		return clearAllowed;
+	}
+
+	protected void setClearAllowed(boolean clearAllowed) {
+		this.clearAllowed = clearAllowed;
+	}
+
+	protected boolean isAddAllowed() {
+		return addAllowed;
+	}
+
+	protected void setAddAllowed(boolean addAllowed) {
+		this.addAllowed = addAllowed;
 	}
 
 	@Override
@@ -236,10 +266,12 @@ public class EntityLookupField<ID extends Serializable, T extends AbstractEntity
 		bar.addComponent(selectButton);
 
 		// button for clearing the current selection
-		clearButton = new Button(getMessageService().getMessage("ocs.clear", VaadinUtils.getLocale()));
-		clearButton.setIcon(FontAwesome.ERASER);
-		clearButton.addClickListener(event -> setValue(null));
-		bar.addComponent(clearButton);
+		if (clearAllowed) {
+			clearButton = new Button(getMessageService().getMessage("ocs.clear", VaadinUtils.getLocale()));
+			clearButton.setIcon(FontAwesome.ERASER);
+			clearButton.addClickListener(event -> setValue(null));
+			bar.addComponent(clearButton);
+		}
 
 		// quick add button
 		if (addAllowed) {
@@ -277,7 +309,9 @@ public class EntityLookupField<ID extends Serializable, T extends AbstractEntity
 		super.setEnabled(enabled);
 		if (selectButton != null) {
 			selectButton.setEnabled(enabled);
-			clearButton.setEnabled(enabled);
+			if (getClearButton() != null) {
+				getClearButton().setEnabled(enabled);
+			}
 			if (getAddButton() != null) {
 				getAddButton().setEnabled(enabled);
 			}
